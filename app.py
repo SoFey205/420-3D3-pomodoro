@@ -45,7 +45,7 @@ class App:
         # Affichage des sessions
         self.label_sessions = tk.Label(
             self.fenetre,
-            text="Sessions complétées : 0",
+            text="Sessions complétées : 0", #changer 
             font=("Arial", 12)
         )
         self.label_sessions.pack(pady=5)
@@ -80,19 +80,19 @@ class App:
 
     def demarrer(self):
         self.en_marche = True
-        self.en_pause = False
-        self.btn_start.config(state=tk.DISABLED)
-        self.btn_pause.config(state=tk.NORMAL)
+        self.en_pause = False #meme quand il devient true il reste normal?
+        self.btn_start.config(state=tk.DISABLED) #erreur?
+        self.btn_pause.config(state=tk.NORMAL) #il reste normal? ahh car il est normal seulement dans demarrer, mais ailleur comme dans pause par exemple, c'est pas foncément le cas, il peut varier vu que dans pause on lui a pas imposé un état avec le ".config". So etat change selon le if !
         self.tick()
 
     def pause(self):
-        if self.en_pause:
-            self.en_pause = False
+        if not self.en_pause: #quand ca tourne 
+            self.en_pause = True #On veut le mettre en pause
+            self.btn_pause.config(text="Reprendre")
+        else:                 #quand c'est en pause
+            self.en_pause = False #On veut le démarrer 
             self.btn_pause.config(text="Pause")
             self.tick()
-        else:
-            self.en_pause = True
-            self.btn_pause.config(text="Reprendre")
 
     def reinitialiser(self):
         self.en_marche = False
@@ -136,6 +136,8 @@ class App:
                 self.label_sessions.config(
                     text=f"Sessions complétées : {self.sessions_completees}"
                 )
+                #LE SONNNN?
+                self.jouer_son()
                 self.label_etat.config(text="Pause", fg="blue")
                 self.temps_restant = DUREE_PAUSE
 
